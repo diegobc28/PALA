@@ -1,6 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import { ObjectId } from "mongodb";
 import config from "@/config";
 import connectMongo from "./mongo";
 
@@ -42,6 +43,24 @@ export const authOptions = {
     session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.sub;
+        
+        // Get user role from database using native MongoDB client
+        if (connectMongo) {
+          try {
+            const client = await connectMongo;
+            const db = client.db();
+            const user = await db.collection('users').findOne({ 
+              _id: new ObjectId(token.sub) 
+            });
+            if (user) {
+              session.user.role = user.role || 'user';
+            }
+          } catch (error) {
+            console.error("Error fetching user role:", error);
+            // Fallback to default role
+            session.user.role = 'user';
+          }
+        }
       }
       return session;
     },

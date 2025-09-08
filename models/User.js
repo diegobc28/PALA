@@ -36,6 +36,12 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // Role-based access control
+    role: {
+      type: String,
+      enum: ['user', 'tienda', 'admin'],
+      default: 'user',
+    },
   },
   {
     timestamps: true,
