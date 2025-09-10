@@ -84,6 +84,17 @@ const storeSchema = mongoose.Schema(
       maxlength: 500,
       default: "",
     },
+    // Image fields for Cloudinary integration
+    heroImageUrl: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    aboutUsImageUrl: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     isActive: {
       type: Boolean,
       default: true,

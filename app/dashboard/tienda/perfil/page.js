@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { CldUploadWidget, CldImage } from "next-cloudinary";
 
 export default function TiendaPerfil() {
   const { data: session } = useSession();
@@ -21,6 +22,8 @@ export default function TiendaPerfil() {
     city: "",
     staffNumber: "",
     certifications: "",
+    heroImageUrl: "",
+    aboutUsImageUrl: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -47,6 +50,8 @@ export default function TiendaPerfil() {
           city: data.store.city || "",
           staffNumber: data.store.staffNumber || "",
           certifications: data.store.certifications || "",
+          heroImageUrl: data.store.heroImageUrl || "",
+          aboutUsImageUrl: data.store.aboutUsImageUrl || "",
         });
       }
     } catch (error) {
@@ -413,6 +418,116 @@ export default function TiendaPerfil() {
               />
               <p className="text-gray-500 text-sm mt-1">
                 {formData.certifications.length}/500
+              </p>
+            </div>
+
+            {/* Imagen Principal/Hero */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Imagen Principal
+              </label>
+              <div className="space-y-4">
+                {formData.heroImageUrl && (
+                  <div className="relative">
+                    <CldImage
+                      width="400"
+                      height="200"
+                      src={formData.heroImageUrl}
+                      alt="Imagen principal de la tienda"
+                      className="rounded-lg border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, heroImageUrl: "" }))}
+                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+                <CldUploadWidget
+                  signatureEndpoint="/api/cloudinary/sign"
+                  onSuccess={(result, { widget }) => {
+                    if (result.info?.secure_url) {
+                      setFormData(prev => ({
+                        ...prev,
+                        heroImageUrl: result.info.secure_url
+                      }));
+                      console.log('Hero image uploaded:', result.info.secure_url);
+                    }
+                  }}
+                  onQueuesEnd={(result, { widget }) => {
+                    widget.close();
+                  }}
+                >
+                  {({ open }) => (
+                    <button
+                      type="button"
+                      onClick={() => open()}
+                      className="btn btn-outline w-full"
+                    >
+                      {formData.heroImageUrl ? "Cambiar Imagen Principal" : "Subir Imagen Principal"}
+                    </button>
+                  )}
+                </CldUploadWidget>
+              </div>
+              <p className="text-gray-500 text-sm mt-1">
+                Imagen que aparecerá en la parte superior de tu tienda (recomendado: 1200x600px)
+              </p>
+            </div>
+
+            {/* Imagen About Us */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Imagen About Us
+              </label>
+              <div className="space-y-4">
+                {formData.aboutUsImageUrl && (
+                  <div className="relative">
+                    <CldImage
+                      width="400"
+                      height="300"
+                      src={formData.aboutUsImageUrl}
+                      alt="Imagen de la sección About Us"
+                      className="rounded-lg border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, aboutUsImageUrl: "" }))}
+                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm hover:bg-red-600"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
+                <CldUploadWidget
+                  signatureEndpoint="/api/cloudinary/sign"
+                  onSuccess={(result, { widget }) => {
+                    if (result.info?.secure_url) {
+                      setFormData(prev => ({
+                        ...prev,
+                        aboutUsImageUrl: result.info.secure_url
+                      }));
+                      console.log('About Us image uploaded:', result.info.secure_url);
+                    }
+                  }}
+                  onQueuesEnd={(result, { widget }) => {
+                    widget.close();
+                  }}
+                >
+                  {({ open }) => (
+                    <button
+                      type="button"
+                      onClick={() => open()}
+                      className="btn btn-outline w-full"
+                    >
+                      {formData.aboutUsImageUrl ? "Cambiar Imagen About Us" : "Subir Imagen About Us"}
+                    </button>
+                  )}
+                </CldUploadWidget>
+              </div>
+              <p className="text-gray-500 text-sm mt-1">
+                Imagen que aparecerá en la sección "Acerca de Nosotros" (recomendado: 800x600px)
               </p>
             </div>
 

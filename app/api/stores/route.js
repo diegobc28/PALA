@@ -45,7 +45,8 @@ export async function POST(req) {
     const { 
       name, description, whatsapp, slug,
       aboutUs, businessType, yearEstablished, 
-      city, staffNumber, certifications 
+      city, staffNumber, certifications,
+      heroImageUrl, aboutUsImageUrl
     } = await req.json();
 
     if (!name || !description || !whatsapp || !slug) {
@@ -87,6 +88,8 @@ export async function POST(req) {
       city: city || "",
       staffNumber: staffNumber || "",
       certifications: certifications || "",
+      heroImageUrl: heroImageUrl || "",
+      aboutUsImageUrl: aboutUsImageUrl || "",
     });
 
     await store.save();
@@ -124,7 +127,8 @@ export async function PUT(req) {
     const { 
       name, description, whatsapp, slug,
       aboutUs, businessType, yearEstablished, 
-      city, staffNumber, certifications 
+      city, staffNumber, certifications,
+      heroImageUrl, aboutUsImageUrl
     } = await req.json();
 
     if (!name || !description || !whatsapp || !slug) {
@@ -167,6 +171,8 @@ export async function PUT(req) {
     store.city = city || "";
     store.staffNumber = staffNumber || "";
     store.certifications = certifications || "";
+    store.heroImageUrl = heroImageUrl || "";
+    store.aboutUsImageUrl = aboutUsImageUrl || "";
 
     await store.save();
 
