@@ -15,6 +15,12 @@ export default function TiendaPerfil() {
     description: "",
     whatsapp: "",
     slug: "",
+    aboutUs: "",
+    businessType: "",
+    yearEstablished: "",
+    city: "",
+    staffNumber: "",
+    certifications: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -35,6 +41,12 @@ export default function TiendaPerfil() {
           description: data.store.description || "",
           whatsapp: data.store.whatsapp || "",
           slug: data.store.slug || "",
+          aboutUs: data.store.aboutUs || "",
+          businessType: data.store.businessType || "",
+          yearEstablished: data.store.yearEstablished || "",
+          city: data.store.city || "",
+          staffNumber: data.store.staffNumber || "",
+          certifications: data.store.certifications || "",
         });
       }
     } catch (error) {
@@ -293,6 +305,114 @@ export default function TiendaPerfil() {
               )}
               <p className="text-gray-500 text-sm mt-1">
                 Solo números, sin espacios ni símbolos (10-15 dígitos)
+              </p>
+            </div>
+
+            {/* About Us */}
+            <div>
+              <label htmlFor="aboutUs" className="block text-sm font-medium text-gray-700 mb-2">
+                Acerca de Nosotros
+              </label>
+              <textarea
+                id="aboutUs"
+                name="aboutUs"
+                value={formData.aboutUs}
+                onChange={handleInputChange}
+                maxLength={1000}
+                rows={4}
+                className="textarea textarea-bordered w-full"
+                placeholder="Historia y descripción detallada de tu empresa..."
+              />
+              <p className="text-gray-500 text-sm mt-1">
+                {formData.aboutUs.length}/1000
+              </p>
+            </div>
+
+            {/* Business Type */}
+            <div>
+              <label htmlFor="businessType" className="block text-sm font-medium text-gray-700 mb-2">
+                Tipo de Negocio
+              </label>
+              <input
+                type="text"
+                id="businessType"
+                name="businessType"
+                value={formData.businessType}
+                onChange={handleInputChange}
+                maxLength={100}
+                className="input input-bordered w-full"
+                placeholder="Ej: Manufacturera, Comercial, Servicios"
+              />
+            </div>
+
+            {/* Year Established */}
+            <div>
+              <label htmlFor="yearEstablished" className="block text-sm font-medium text-gray-700 mb-2">
+                Año de Fundación
+              </label>
+              <input
+                type="text"
+                id="yearEstablished"
+                name="yearEstablished"
+                value={formData.yearEstablished}
+                onChange={handleInputChange}
+                maxLength={4}
+                className="input input-bordered w-full"
+                placeholder="Ej: 1999"
+              />
+            </div>
+
+            {/* City */}
+            <div>
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
+                Ciudad
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                maxLength={100}
+                className="input input-bordered w-full"
+                placeholder="Ej: Ciudad de México, Guadalajara"
+              />
+            </div>
+
+            {/* Staff Number */}
+            <div>
+              <label htmlFor="staffNumber" className="block text-sm font-medium text-gray-700 mb-2">
+                Número de Empleados
+              </label>
+              <input
+                type="text"
+                id="staffNumber"
+                name="staffNumber"
+                value={formData.staffNumber}
+                onChange={handleInputChange}
+                maxLength={50}
+                className="input input-bordered w-full"
+                placeholder="Ej: 10-50, 250"
+              />
+            </div>
+
+            {/* Certifications */}
+            <div>
+              <label htmlFor="certifications" className="block text-sm font-medium text-gray-700 mb-2">
+                Certificaciones
+              </label>
+              <textarea
+                id="certifications"
+                name="certifications"
+                value={formData.certifications}
+                onChange={handleInputChange}
+                maxLength={500}
+                rows={3}
+                className="textarea textarea-bordered w-full"
+                placeholder="Ej: ISO 9001:2015, AWS Welders Certification"
+              />
+              <p className="text-gray-500 text-sm mt-1">
+                {formData.certifications.length}/500
               </p>
             </div>
 

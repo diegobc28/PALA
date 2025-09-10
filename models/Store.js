@@ -47,6 +47,43 @@ const storeSchema = mongoose.Schema(
         message: "WhatsApp number must be 10-15 digits"
       }
     },
+    // Additional optional fields for MVP
+    aboutUs: {
+      type: String,
+      trim: true,
+      maxlength: 1000,
+      default: "",
+    },
+    businessType: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: "",
+    },
+    yearEstablished: {
+      type: String,
+      trim: true,
+      maxlength: 4,
+      default: "",
+    },
+    city: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: "",
+    },
+    staffNumber: {
+      type: String,
+      trim: true,
+      maxlength: 50,
+      default: "",
+    },
+    certifications: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+      default: "",
+    },
     isActive: {
       type: Boolean,
       default: true,

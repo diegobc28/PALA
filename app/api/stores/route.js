@@ -42,7 +42,11 @@ export async function POST(req) {
       );
     }
 
-    const { name, description, whatsapp, slug } = await req.json();
+    const { 
+      name, description, whatsapp, slug,
+      aboutUs, businessType, yearEstablished, 
+      city, staffNumber, certifications 
+    } = await req.json();
 
     if (!name || !description || !whatsapp || !slug) {
       return NextResponse.json(
@@ -77,6 +81,12 @@ export async function POST(req) {
       description,
       whatsapp,
       slug,
+      aboutUs: aboutUs || "",
+      businessType: businessType || "",
+      yearEstablished: yearEstablished || "",
+      city: city || "",
+      staffNumber: staffNumber || "",
+      certifications: certifications || "",
     });
 
     await store.save();
@@ -111,7 +121,11 @@ export async function PUT(req) {
       );
     }
 
-    const { name, description, whatsapp, slug } = await req.json();
+    const { 
+      name, description, whatsapp, slug,
+      aboutUs, businessType, yearEstablished, 
+      city, staffNumber, certifications 
+    } = await req.json();
 
     if (!name || !description || !whatsapp || !slug) {
       return NextResponse.json(
@@ -147,6 +161,12 @@ export async function PUT(req) {
     store.description = description;
     store.whatsapp = whatsapp;
     store.slug = slug;
+    store.aboutUs = aboutUs || "";
+    store.businessType = businessType || "";
+    store.yearEstablished = yearEstablished || "";
+    store.city = city || "";
+    store.staffNumber = staffNumber || "";
+    store.certifications = certifications || "";
 
     await store.save();
 

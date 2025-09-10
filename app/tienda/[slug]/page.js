@@ -79,7 +79,74 @@ export default async function TiendaPage({ params }) {
       </section>
 
       {/* Main Content */}
-      <section className="max-w-4xl mx-auto px-4 py-12">
+      <section className="max-w-4xl mx-auto px-4 py-12 space-y-12">
+        {/* About Us Section */}
+        {store.aboutUs && (
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Acerca de Nosotros
+            </h2>
+            <div className="prose max-w-none">
+              <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                {store.aboutUs}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Additional Information Section */}
+        {(store.businessType || store.yearEstablished || store.city) && (
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Información Adicional
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {store.businessType && (
+                <div>
+                  <h3 className="font-medium text-gray-600 mb-2">Tipo de Negocio</h3>
+                  <p className="text-gray-900">{store.businessType}</p>
+                </div>
+              )}
+              {store.yearEstablished && (
+                <div>
+                  <h3 className="font-medium text-gray-600 mb-2">Año Establecido</h3>
+                  <p className="text-gray-900">{store.yearEstablished}</p>
+                </div>
+              )}
+              {store.city && (
+                <div>
+                  <h3 className="font-medium text-gray-600 mb-2">Ciudad</h3>
+                  <p className="text-gray-900">{store.city}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Capacity Section */}
+        {(store.staffNumber || store.certifications) && (
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+              Capacidad
+            </h2>
+            <div className="space-y-6">
+              {store.staffNumber && (
+                <div>
+                  <h3 className="font-medium text-gray-600 mb-2">Número de Empleados</h3>
+                  <p className="text-gray-900">{store.staffNumber}</p>
+                </div>
+              )}
+              {store.certifications && (
+                <div>
+                  <h3 className="font-medium text-gray-600 mb-2">Certificaciones</h3>
+                  <p className="text-gray-900 whitespace-pre-wrap">{store.certifications}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Contact Section */}
         <div className="bg-white rounded-lg shadow-md p-8">
           <div className="text-center space-y-6">
             <h2 className="text-2xl font-semibold text-gray-900">
