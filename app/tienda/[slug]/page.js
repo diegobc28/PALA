@@ -352,25 +352,6 @@ export default function TiendaPage({ params }) {
           </div>
         )}
       </section>
-
-      {/* Footer */}
-      <footer className="bg-white border-t mt-12">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="text-center text-gray-500 text-sm">
-            <p>
-              Tienda creada con{" "}
-              <a
-                href={config.domainName ? `https://${config.domainName}` : "#"}
-                className="text-blue-600 hover:text-blue-800 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {config.appName}
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
