@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/next-auth";
+import TiendaDashboard from "@/components/TiendaDashboard";
 import config from "@/config";
 
 export default async function LayoutTienda({ children }) {
@@ -14,5 +15,9 @@ export default async function LayoutTienda({ children }) {
     redirect('/dashboard');
   }
 
-  return <>{children}</>;
+  return (
+    <TiendaDashboard>
+      {children}
+    </TiendaDashboard>
+  );
 }
