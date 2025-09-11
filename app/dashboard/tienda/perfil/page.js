@@ -213,10 +213,24 @@ export default function TiendaPerfil() {
         </div>
       )}
 
-      <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Nombre de la tienda */}
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* 🏪 Sección Información Principal */}
+        <div className="bg-white p-6 rounded-xl shadow-md border border-blue-100">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
             <div>
+              <h3 className="text-lg font-semibold text-gray-900">Información Principal</h3>
+              <p className="text-sm text-gray-600">Datos básicos que aparecerán en la parte superior de tu tienda</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Nombre de la tienda */}
+            <div className="md:col-span-2">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Nombre de la Tienda *
               </label>
@@ -236,7 +250,7 @@ export default function TiendaPerfil() {
             </div>
 
             {/* Slug */}
-            <div>
+            <div className="md:col-span-2">
               <label htmlFor="slug" className="block text-sm font-medium text-gray-700 mb-2">
                 URL de tu tienda *
               </label>
@@ -267,7 +281,7 @@ export default function TiendaPerfil() {
             </div>
 
             {/* Descripción */}
-            <div>
+            <div className="md:col-span-2">
               <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                 Descripción *
               </label>
@@ -313,114 +327,6 @@ export default function TiendaPerfil() {
               </p>
             </div>
 
-            {/* About Us */}
-            <div>
-              <label htmlFor="aboutUs" className="block text-sm font-medium text-gray-700 mb-2">
-                Acerca de Nosotros
-              </label>
-              <textarea
-                id="aboutUs"
-                name="aboutUs"
-                value={formData.aboutUs}
-                onChange={handleInputChange}
-                maxLength={1000}
-                rows={4}
-                className="textarea textarea-bordered w-full"
-                placeholder="Historia y descripción detallada de tu empresa..."
-              />
-              <p className="text-gray-500 text-sm mt-1">
-                {formData.aboutUs.length}/1000
-              </p>
-            </div>
-
-            {/* Business Type */}
-            <div>
-              <label htmlFor="businessType" className="block text-sm font-medium text-gray-700 mb-2">
-                Tipo de Negocio
-              </label>
-              <input
-                type="text"
-                id="businessType"
-                name="businessType"
-                value={formData.businessType}
-                onChange={handleInputChange}
-                maxLength={100}
-                className="input input-bordered w-full"
-                placeholder="Ej: Manufacturera, Comercial, Servicios"
-              />
-            </div>
-
-            {/* Year Established */}
-            <div>
-              <label htmlFor="yearEstablished" className="block text-sm font-medium text-gray-700 mb-2">
-                Año de Fundación
-              </label>
-              <input
-                type="text"
-                id="yearEstablished"
-                name="yearEstablished"
-                value={formData.yearEstablished}
-                onChange={handleInputChange}
-                maxLength={4}
-                className="input input-bordered w-full"
-                placeholder="Ej: 1999"
-              />
-            </div>
-
-            {/* City */}
-            <div>
-              <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
-                Ciudad
-              </label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
-                maxLength={100}
-                className="input input-bordered w-full"
-                placeholder="Ej: Ciudad de México, Guadalajara"
-              />
-            </div>
-
-            {/* Staff Number */}
-            <div>
-              <label htmlFor="staffNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                Número de Empleados
-              </label>
-              <input
-                type="text"
-                id="staffNumber"
-                name="staffNumber"
-                value={formData.staffNumber}
-                onChange={handleInputChange}
-                maxLength={50}
-                className="input input-bordered w-full"
-                placeholder="Ej: 10-50, 250"
-              />
-            </div>
-
-            {/* Certifications */}
-            <div>
-              <label htmlFor="certifications" className="block text-sm font-medium text-gray-700 mb-2">
-                Certificaciones
-              </label>
-              <textarea
-                id="certifications"
-                name="certifications"
-                value={formData.certifications}
-                onChange={handleInputChange}
-                maxLength={500}
-                rows={3}
-                className="textarea textarea-bordered w-full"
-                placeholder="Ej: ISO 9001:2015, AWS Welders Certification"
-              />
-              <p className="text-gray-500 text-sm mt-1">
-                {formData.certifications.length}/500
-              </p>
-            </div>
-
             {/* Imagen Principal/Hero */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -434,7 +340,7 @@ export default function TiendaPerfil() {
                       height="200"
                       src={formData.heroImageUrl}
                       alt="Imagen principal de la tienda"
-                      className="rounded-lg border"
+                      className="rounded-lg border w-full"
                     />
                     <button
                       type="button"
@@ -475,9 +381,114 @@ export default function TiendaPerfil() {
                 Imagen que aparecerá en la parte superior de tu tienda (recomendado: 1200x600px)
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* 🏢 Sección Información Empresarial */}
+        <div className="bg-white p-6 rounded-xl shadow-md border border-green-100">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
+            <div className="p-2 bg-green-100 rounded-lg">
+              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Datos de la Empresa</h3>
+              <p className="text-sm text-gray-600">Información que aparecerá en el Business Information card</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Business Type */}
+            <div>
+              <label htmlFor="businessType" className="block text-sm font-medium text-gray-700 mb-2">
+                Tipo de Negocio
+              </label>
+              <input
+                type="text"
+                id="businessType"
+                name="businessType"
+                value={formData.businessType}
+                onChange={handleInputChange}
+                maxLength={100}
+                className="input input-bordered w-full"
+                placeholder="Ej: Manufacturera, Comercial, Servicios"
+              />
+            </div>
+
+            {/* Year Established */}
+            <div>
+              <label htmlFor="yearEstablished" className="block text-sm font-medium text-gray-700 mb-2">
+                Año de Fundación
+              </label>
+              <input
+                type="text"
+                id="yearEstablished"
+                name="yearEstablished"
+                value={formData.yearEstablished}
+                onChange={handleInputChange}
+                maxLength={4}
+                className="input input-bordered w-full"
+                placeholder="Ej: 1999"
+              />
+            </div>
+
+            {/* City */}
+            <div className="md:col-span-2">
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
+                Ciudad
+              </label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleInputChange}
+                maxLength={100}
+                className="input input-bordered w-full"
+                placeholder="Ej: Ciudad de México, Guadalajara"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 📖 Sección About Us */}
+        <div className="bg-white p-6 rounded-xl shadow-md border border-purple-100">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Acerca de Nosotros</h3>
+              <p className="text-sm text-gray-600">Historia detallada y presentación de tu empresa</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* About Us */}
+            <div className="md:col-span-2">
+              <label htmlFor="aboutUs" className="block text-sm font-medium text-gray-700 mb-2">
+                Descripción Detallada
+              </label>
+              <textarea
+                id="aboutUs"
+                name="aboutUs"
+                value={formData.aboutUs}
+                onChange={handleInputChange}
+                maxLength={1000}
+                rows={4}
+                className="textarea textarea-bordered w-full"
+                placeholder="Historia y descripción detallada de tu empresa..."
+              />
+              <p className="text-gray-500 text-sm mt-1">
+                {formData.aboutUs.length}/1000
+              </p>
+            </div>
 
             {/* Imagen About Us */}
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Imagen About Us
               </label>
@@ -489,7 +500,7 @@ export default function TiendaPerfil() {
                       height="300"
                       src={formData.aboutUsImageUrl}
                       alt="Imagen de la sección About Us"
-                      className="rounded-lg border"
+                      className="rounded-lg border w-full"
                     />
                     <button
                       type="button"
@@ -530,26 +541,87 @@ export default function TiendaPerfil() {
                 Imagen que aparecerá en la sección "Acerca de Nosotros" (recomendado: 800x600px)
               </p>
             </div>
-
-            {/* Botón de envío */}
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                disabled={saving || checkingSlug || slugAvailable === false}
-                className="btn btn-primary"
-              >
-                {saving ? (
-                  <>
-                    <span className="loading loading-spinner loading-sm"></span>
-                    Guardando...
-                  </>
-                ) : (
-                  store ? "Actualizar Perfil" : "Crear Perfil"
-                )}
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
+
+        {/* ⚡ Sección Capacidad */}
+        <div className="bg-white p-6 rounded-xl shadow-md border border-yellow-100">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
+            <div className="p-2 bg-yellow-100 rounded-lg">
+              <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Capacidad y Certificaciones</h3>
+              <p className="text-sm text-gray-600">Información técnica y certificaciones de tu empresa</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Staff Number */}
+            <div>
+              <label htmlFor="staffNumber" className="block text-sm font-medium text-gray-700 mb-2">
+                Número de Empleados
+              </label>
+              <input
+                type="text"
+                id="staffNumber"
+                name="staffNumber"
+                value={formData.staffNumber}
+                onChange={handleInputChange}
+                maxLength={50}
+                className="input input-bordered w-full"
+                placeholder="Ej: 10-50, 250"
+              />
+            </div>
+
+            {/* Certifications */}
+            <div className="md:col-span-2">
+              <label htmlFor="certifications" className="block text-sm font-medium text-gray-700 mb-2">
+                Certificaciones
+              </label>
+              <textarea
+                id="certifications"
+                name="certifications"
+                value={formData.certifications}
+                onChange={handleInputChange}
+                maxLength={500}
+                rows={3}
+                className="textarea textarea-bordered w-full"
+                placeholder="Ej: ISO 9001:2015, AWS Welders Certification"
+              />
+              <p className="text-gray-500 text-sm mt-1">
+                {formData.certifications.length}/500
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Botón de envío */}
+        <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">¿Listo para publicar?</h3>
+              <p className="text-sm text-gray-600">Revisa que toda la información esté correcta antes de guardar</p>
+            </div>
+            <button
+              type="submit"
+              disabled={saving || checkingSlug || slugAvailable === false}
+              className="btn btn-primary btn-lg"
+            >
+              {saving ? (
+                <>
+                  <span className="loading loading-spinner loading-sm"></span>
+                  Guardando...
+                </>
+              ) : (
+                store ? "Actualizar Perfil" : "Crear Perfil"
+              )}
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   );
 }
