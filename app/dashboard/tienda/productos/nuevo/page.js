@@ -16,6 +16,8 @@ export default function NuevoProductoPage() {
     priceMin: "",
     priceMax: "",
     minimumOrder: "",
+    category: "",
+    subcategory: "",
   });
   const [images, setImages] = useState([]);
 
@@ -42,7 +44,7 @@ export default function NuevoProductoPage() {
   };
 
   const validateForm = () => {
-    const { name, description, priceMin, priceMax, minimumOrder } = formData;
+    const { name, description, priceMin, priceMax, minimumOrder, category } = formData;
     
     if (!name.trim()) {
       toast.error("El nombre del producto es requerido");
@@ -73,6 +75,11 @@ export default function NuevoProductoPage() {
       toast.error("El pedido mínimo es requerido");
       return false;
     }
+
+    if (!category.trim()) {
+      toast.error("La categoría es requerida");
+      return false;
+    }
     
     return true;
   };
@@ -98,6 +105,8 @@ export default function NuevoProductoPage() {
             max: Number(formData.priceMax)
           },
           minimumOrder: formData.minimumOrder.trim(),
+          category: formData.category.trim(),
+          subcategory: formData.subcategory.trim() || null,
           images: images
         }),
       });
@@ -233,6 +242,41 @@ export default function NuevoProductoPage() {
                 maxLength={100}
                 required
               />
+            </div>
+
+            {/* Category and Subcategory */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+                  Categoría *
+                </label>
+                <input
+                  type="text"
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="input input-bordered w-full"
+                  placeholder="Ej: Maquinaria Industrial, Herramientas"
+                  maxLength={100}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="subcategory" className="block text-sm font-medium text-gray-700 mb-2">
+                  Subcategoría (Opcional)
+                </label>
+                <input
+                  type="text"
+                  id="subcategory"
+                  name="subcategory"
+                  value={formData.subcategory}
+                  onChange={handleInputChange}
+                  className="input input-bordered w-full"
+                  placeholder="Ej: Transportadoras, Soldadoras"
+                  maxLength={100}
+                />
+              </div>
             </div>
 
             {/* Images */}

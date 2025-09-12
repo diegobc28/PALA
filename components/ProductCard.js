@@ -1,22 +1,38 @@
 import { CldImage } from "next-cloudinary";
+import { useState } from "react";
 
 export default function ProductCard({ product }) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
   // Format WhatsApp URL with product info
   const whatsappUrl = `https://wa.me/${product.store?.whatsapp}?text=${encodeURIComponent(
     `Hola! Me interesa tu producto: ${product.name} - $${product.priceRange.min}-$${product.priceRange.max} USD. Vengo desde tu tienda online.`
   )}`;
 
+  // Image navigation functions
+  const nextImage = () => {
+    if (product.images && currentImageIndex < product.images.length - 1) {
+      setCurrentImageIndex(currentImageIndex + 1);
+    }
+  };
+
+  const prevImage = () => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex(currentImageIndex - 1);
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow duration-200">
       {/* Product Image */}
-      <div className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden relative">
+      <div className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden relative group">
         {product.images && product.images.length > 0 ? (
           <CldImage
             width="400"
             height="400"
-            src={product.images[0]}
-            alt={product.name}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+            src={product.images[currentImageIndex]}
+            alt={`${product.name} - imagen ${currentImageIndex + 1}`}
+            className="w-full h-full object-cover transition-all duration-300"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
@@ -36,10 +52,45 @@ export default function ProductCard({ product }) {
           </div>
         )}
         
+        {/* Navigation Arrows */}
+        {product.images && product.images.length > 1 && (
+          <>
+            {/* Previous Arrow */}
+            {currentImageIndex > 0 && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  prevImage();
+                }}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+            
+            {/* Next Arrow */}
+            {currentImageIndex < product.images.length - 1 && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  nextImage();
+                }}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+          </>
+        )}
+        
         {/* Image count indicator */}
         {product.images && product.images.length > 1 && (
           <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
-            1/{product.images.length}
+            {currentImageIndex + 1}/{product.images.length}
           </div>
         )}
       </div>
@@ -55,6 +106,23 @@ export default function ProductCard({ product }) {
         <p className="text-sm text-blue-600 mb-2 font-medium">
           Por: {product.store?.name || 'Tienda'}
         </p>
+
+        {/* Category and Subcategory */}
+        {product.category && (
+          <div className="flex flex-wrap items-center gap-1 mb-3">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              🏷️ {product.category}
+            </span>
+            {product.subcategory && (
+              <>
+                <span className="text-gray-400 text-xs">›</span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                  {product.subcategory}
+                </span>
+              </>
+            )}
+          </div>
+        )}
 
         {/* Description */}
         <p className="text-sm text-gray-600 mb-3 line-clamp-2 min-h-[2.5rem]">

@@ -67,10 +67,10 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    const { name, description, images, priceRange, minimumOrder } = body;
+    const { name, description, images, priceRange, minimumOrder, category, subcategory } = body;
 
     // Validate required fields
-    if (!name || !description || !priceRange?.min || !priceRange?.max || !minimumOrder) {
+    if (!name || !description || !priceRange?.min || !priceRange?.max || !minimumOrder || !category) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -104,6 +104,8 @@ export async function POST(req) {
         max: Number(priceRange.max)
       },
       minimumOrder: minimumOrder.trim(),
+      category: category.trim(),
+      subcategory: subcategory ? subcategory.trim() : null,
       isActive: true
     });
 

@@ -55,6 +55,19 @@ const productSchema = mongoose.Schema(
       trim: true,
       maxlength: 100,
     },
+    category: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+    subcategory: {
+      type: String,
+      required: false,
+      trim: true,
+      maxlength: 100,
+      default: null,
+    },
     isActive: {
       type: Boolean,
       default: true,
@@ -70,6 +83,9 @@ const productSchema = mongoose.Schema(
 productSchema.index({ storeId: 1 });
 productSchema.index({ isActive: 1 });
 productSchema.index({ createdAt: -1 });
+productSchema.index({ category: 1 });
+productSchema.index({ storeId: 1, category: 1 });
+productSchema.index({ storeId: 1, category: 1, subcategory: 1 });
 
 // Virtual to populate store information
 productSchema.virtual('store', {
