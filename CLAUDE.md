@@ -27,6 +27,9 @@ This is a **ShipFast Next.js boilerplate** - a SaaS starter kit with authenticat
 - **Payments**: Stripe with webhook integration for subscription management
 - **Styling**: TailwindCSS + DaisyUI component library
 - **Email**: Mailgun or Resend for transactional emails
+- **Images**: Cloudinary for image hosting and management
+- **Support**: Crisp for customer support chat integration
+- **Notifications**: React Hot Toast for user notifications
 - **Analytics**: Plausible (optional)
 
 ### Key Architecture Patterns
@@ -40,7 +43,7 @@ This is a **ShipFast Next.js boilerplate** - a SaaS starter kit with authenticat
 #### Role-Based Access Control
 The app implements a 3-tier role system:
 - **user**: Default role, basic dashboard access
-- **tienda**: Store/merchant role, additional tienda dashboard
+- **tienda**: Store owner role, can create and manage store profiles with tienda dashboard access
 - **admin**: Full admin access to all areas
 
 #### Payment Integration
@@ -51,8 +54,16 @@ The app implements a 3-tier role system:
 #### Database Architecture
 - **MongoDB**: Primary database with connection via `libs/mongo.js`
 - **Mongoose**: ODM for schema validation and relationships
-- **Models**: User and Lead models with role-based access patterns
+- **Models**: User, Lead, and Store models with role-based access patterns
 - User model includes Stripe integration fields and role enum
+- Store model handles business profiles with slug-based routing and Cloudinary image integration
+
+#### Store/Marketplace Architecture
+- **Store Creation**: Tienda users can create business profiles with unique slugs
+- **Public Store Pages**: Each store gets a public page at `/tienda/[slug]` with business information
+- **Image Management**: Cloudinary integration for hero images and about us images
+- **Direct Contact**: WhatsApp integration for direct customer-to-merchant communication
+- **Slug Validation**: API endpoints handle slug availability checking and validation
 
 ### Project Structure
 
@@ -61,11 +72,14 @@ app/
 ├── api/                    # API routes
 │   ├── auth/              # NextAuth.js authentication
 │   ├── stripe/            # Stripe payment endpoints
+│   ├── stores/            # Store management API endpoints
+│   ├── cloudinary/        # Image upload API endpoints
 │   └── webhook/           # Webhook handlers (Stripe, Mailgun)
 ├── blog/                  # Blog functionality with dynamic routes
 ├── dashboard/             # Role-based protected dashboards
 │   ├── admin/            # Admin-only pages
-│   └── tienda/           # Tienda role pages
+│   └── tienda/           # Store owner dashboard and profile management
+├── tienda/[slug]/         # Public store pages with dynamic routing
 └── (pages)/              # Public marketing pages
 
 components/               # Reusable UI components
@@ -84,7 +98,8 @@ libs/                    # Service layer utilities
 
 models/                  # Mongoose schemas
 ├── User.js             # User model with roles and Stripe fields
-└── Lead.js             # Lead collection model
+├── Lead.js             # Lead collection model
+└── Store.js            # Store model with business profiles and Cloudinary integration
 ```
 
 ### Configuration Management
@@ -103,6 +118,8 @@ Required variables (see `.env.example`):
 - `MONGODB_URI`: Database connection
 - `STRIPE_*`: Payment processing keys
 - `MAILGUN_API_KEY` or `RESEND_API_KEY`: Email service
+- `CLOUDINARY_*`: Image hosting and management service keys
+- `CRISP_WEBSITE_ID`: Customer support chat integration (optional)
 
 ### Development Guidelines
 
@@ -140,3 +157,9 @@ Required variables (see `.env.example`):
 - Magic link authentication requires email service setup
 - Transactional emails use configured sender addresses from `config.js`
 - Support email functionality routes through configured support channels
+
+#### Store & Image Management Integration
+- Cloudinary handles all store images with automatic optimization
+- Store slugs must be unique and follow validation patterns (lowercase, alphanumeric, hyphens only)
+- WhatsApp integration generates direct contact links for customer-merchant communication
+- Store pages are publicly accessible without authentication for customer viewing

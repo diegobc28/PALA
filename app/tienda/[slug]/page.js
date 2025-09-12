@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
-import config from "@/config";
 import { CldImage } from "next-cloudinary";
 
 export default function TiendaPage({ params }) {
