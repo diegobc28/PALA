@@ -13,17 +13,17 @@ export async function GET() {
 
     const products = await Product.find({ isActive: true })
       .populate({
-        path: 'storeId',
-        select: 'name slug whatsapp'
+        path: "storeId",
+        select: "name slug whatsapp",
       })
       .sort({ createdAt: -1 })
       .lean();
 
     return NextResponse.json({
-      products: products.map(product => ({
+      products: products.map((product) => ({
         ...product,
-        store: product.storeId
-      }))
+        store: product.storeId,
+      })),
     });
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -38,7 +38,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user?.id) {
       return NextResponse.json(
         { error: "Authentication required" },
@@ -50,7 +50,7 @@ export async function POST(req) {
 
     // Check if user is a tienda
     const user = await User.findById(session.user.id);
-    if (user?.role !== 'tienda') {
+    if (user?.role !== "tienda") {
       return NextResponse.json(
         { error: "Only store owners can create products" },
         { status: 403 }
@@ -67,10 +67,25 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    const { name, description, images, priceRange, minimumOrder, category, subcategory } = body;
+    const {
+      name,
+      description,
+      images,
+      priceRange,
+      minimumOrder,
+      category,
+      subcategory,
+    } = body;
 
     // Validate required fields
-    if (!name || !description || !priceRange?.min || !priceRange?.max || !minimumOrder || !category) {
+    if (
+      !name ||
+      !description ||
+      !priceRange?.min ||
+      !priceRange?.max ||
+      !minimumOrder ||
+      !category
+    ) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -78,7 +93,11 @@ export async function POST(req) {
     }
 
     // Validate price range
-    if (priceRange.min < 0 || priceRange.max < 0 || priceRange.max < priceRange.min) {
+    if (
+      priceRange.min < 0 ||
+      priceRange.max < 0 ||
+      priceRange.max < priceRange.min
+    ) {
       return NextResponse.json(
         { error: "Invalid price range" },
         { status: 400 }
@@ -99,32 +118,36 @@ export async function POST(req) {
       name: name.trim(),
       description: description.trim(),
       images: images || [],
+      imageUrl: images && images.length > 0 ? images[0] : "", // Use first image as main imageUrl
       priceRange: {
         min: Number(priceRange.min),
-        max: Number(priceRange.max)
+        max: Number(priceRange.max),
       },
+      price: `$${priceRange.min} - $${priceRange.max} USD`, // Format price string
       minimumOrder: minimumOrder.trim(),
       category: category.trim(),
       subcategory: subcategory ? subcategory.trim() : null,
-      isActive: true
+      isActive: true,
     });
 
     await product.save();
 
     // Populate store info for response
     await product.populate({
-      path: 'storeId',
-      select: 'name slug whatsapp'
+      path: "storeId",
+      select: "name slug whatsapp",
     });
 
-    return NextResponse.json({
-      success: true,
-      product: {
-        ...product.toJSON(),
-        store: product.storeId
-      }
-    }, { status: 201 });
-
+    return NextResponse.json(
+      {
+        success: true,
+        product: {
+          ...product.toJSON(),
+          store: product.storeId,
+        },
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error creating product:", error);
     return NextResponse.json(

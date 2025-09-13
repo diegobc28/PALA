@@ -19,41 +19,12 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: 2000,
+      maxlength: 1000,
     },
-    images: {
-      type: [String],
-      validate: {
-        validator: function(v) {
-          return v.length <= 3;
-        },
-        message: "Maximum 3 images allowed"
-      },
-      default: [],
-    },
-    priceRange: {
-      min: {
-        type: Number,
-        required: true,
-        min: 0,
-      },
-      max: {
-        type: Number,
-        required: true,
-        min: 0,
-        validate: {
-          validator: function(value) {
-            return value >= this.priceRange.min;
-          },
-          message: "Max price must be greater than or equal to min price"
-        }
-      },
-    },
-    minimumOrder: {
+    price: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 100,
     },
     category: {
       type: String,
@@ -61,16 +32,31 @@ const productSchema = mongoose.Schema(
       trim: true,
       maxlength: 100,
     },
-    subcategory: {
+    imageUrl: {
       type: String,
-      required: false,
       trim: true,
-      maxlength: 100,
-      default: null,
+      default: "",
+    },
+    images: {
+      type: [String],
+      default: [],
+    },
+    priceRange: {
+      min: { type: Number, default: 0 },
+      max: { type: Number, default: 0 },
+    },
+    minimumOrder: {
+      type: String,
+      trim: true,
+      default: "",
     },
     isActive: {
       type: Boolean,
       default: true,
+    },
+    featured: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -82,20 +68,10 @@ const productSchema = mongoose.Schema(
 // Index for better performance
 productSchema.index({ storeId: 1 });
 productSchema.index({ isActive: 1 });
-productSchema.index({ createdAt: -1 });
-productSchema.index({ category: 1 });
-productSchema.index({ storeId: 1, category: 1 });
-productSchema.index({ storeId: 1, category: 1, subcategory: 1 });
-
-// Virtual to populate store information
-productSchema.virtual('store', {
-  ref: 'Store',
-  localField: 'storeId',
-  foreignField: '_id',
-  justOne: true
-});
+productSchema.index({ featured: 1 });
 
 // add plugin that converts mongoose to json
 productSchema.plugin(toJSON);
 
-export default mongoose.models.Product || mongoose.model("Product", productSchema);
+export default mongoose.models.Product ||
+  mongoose.model("Product", productSchema);
