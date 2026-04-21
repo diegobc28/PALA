@@ -38,7 +38,7 @@ const HeroMarketplace = () => {
               <p className="text-gray-300 leading-relaxed">
                 PALA connects industrial buyers with Verified Suppliers to drive
                 continuous products across North America. Find the Right
-                Manufacturers, Partners and request quotes instantly. If you're
+                Manufacturers, Partners and request quotes instantly. If you&apos;re
                 a Manufacturer, showcase your products and capabilities to reach
                 Corporate Buyers.
               </p>

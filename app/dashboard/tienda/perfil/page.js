@@ -538,7 +538,7 @@ export default function TiendaPerfil() {
                 </CldUploadWidget>
               </div>
               <p className="text-gray-500 text-sm mt-1">
-                Imagen que aparecerá en la sección "Acerca de Nosotros" (recomendado: 800x600px)
+                Imagen que aparecerá en la sección &quot;Acerca de Nosotros&quot; (recomendado: 800x600px)
               </p>
             </div>
           </div>
